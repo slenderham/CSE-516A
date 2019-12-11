@@ -1,5 +1,4 @@
 import random
-from multiarm import Agent
 # Definitions
 # Highway (Linear functions)
 class highway:
@@ -48,19 +47,6 @@ def random_init(agent_num, choices):
         agent_acts.append(choices[r_index])
     return agent_acts
 
-# Stats
-def stats(agent_act, choices):
-    nums = [0, 0, 0]
-    for i in agent_act:
-        if i == choices[0]:
-            nums[0] += 1
-        elif i == choices[1]:
-            nums[1] += 1
-        else:
-            nums[2] += 1
-    print(str(choices[0])+ ": " + str(nums[0]))
-    print(str(choices[1])+ ": " + str(nums[1]))
-    print(str(choices[2])+ ": " + str(nums[2]))
 
 # Learning Model: Fictious Play
 # Best Choice given other agents' play
@@ -96,15 +82,14 @@ def fictious_play(init_agent_acts, choices, highways):
                 if its_best_choice[0][j] != init_agent_acts[i][j]:
                     changes = True
         next_round.append(its_best_choice[0])
-        init_agent_acts[i] = its_best_choice[0]
     return [changes, next_round]
 
 # Setup
 #  4 Highways
-h1 = highway(2,0)
-h2 = highway(3,0)
-h3 = highway(0,200)
-h4 = highway(0,1000)
+h1 = highway(3,2)
+h2 = highway(0,800)
+h3 = highway(0,3)
+h4 = highway(0,400)
 highways = [h1, h2, h3, h4]
 
 # finals
@@ -112,11 +97,9 @@ choices = [[0, 2], [1, 2], [3]]
 
 # fields
 total_util = 0
-agent_num = 1000
+agent_num = 100
 agent_acts = []
 agent_util = []
-
-
 
 # Main 
 agent_acts = random_init(agent_num, choices)
@@ -131,5 +114,5 @@ while change:
     agent_acts = re[1]
     print("")
     print("Round " + str(round))
-    stats(agent_acts, choices)
+    print(agent_acts)
     round += 1
